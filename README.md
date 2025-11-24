@@ -9,6 +9,8 @@
 >
 > 精选的 Google Nano Banana Pro 创意提示词集合
 
+> ⚠️ **Copyright Notice**: All prompts are collected from the community for educational purposes. If you believe any content infringes on your rights, please [open an issue](https://github.com/YouMind-OpenLab/awesome-nano-banana-pro-prompts/issues/new?template=bug-report.yml) and we will remove it promptly.
+
 ---
 
 ## 🌐 View in Web Gallery
@@ -63,7 +65,7 @@ Why use our gallery?
 |--------|-------|
 | 📝 Total Prompts | **511** |
 | ⭐ Featured | **5** |
-| 🔄 Last Updated | **Monday, November 24, 2025 at 3:20:06 AM UTC** |
+| 🔄 Last Updated | **Monday, November 24, 2025 at 3:58:10 AM UTC** |
 
 </div>
 
@@ -7571,6 +7573,6 @@ Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 **[📝 Submit a Prompt](https://github.com/YouMind-OpenLab/awesome-nano-banana-pro-prompts/issues/new?template=submit-prompt.yml)** •
 **[⭐ Star this repo](https://github.com/YouMind-OpenLab/awesome-nano-banana-pro-prompts)**
 
-<sub>🤖 This README is automatically generated. Last updated: 2025-11-24T03:20:06.193Z</sub>
+<sub>🤖 This README is automatically generated. Last updated: 2025-11-24T03:58:10.885Z</sub>
 
 </div>
