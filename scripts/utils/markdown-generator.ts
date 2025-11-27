@@ -113,7 +113,9 @@ export function generateMarkdown(data: SortedPrompts, locale: string = 'en'): st
 }
 
 function generateHeader(locale: string): string {
-  return `# 🍌 ${t('title', locale)}
+  return `# 🚀 ${t('title', locale)}
+
+> 💡 **Note**: ${t('gemini3Promo', locale)}
 
 [![Awesome](https://awesome.re/badge.svg)](https://github.com/sindresorhus/awesome)
 [![GitHub stars](https://img.shields.io/github/stars/YouMind-OpenLab/awesome-nano-banana-pro-prompts?style=social)](https://github.com/YouMind-OpenLab/awesome-nano-banana-pro-prompts)
