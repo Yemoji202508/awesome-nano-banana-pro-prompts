@@ -209,12 +209,7 @@ async function main() {
 
     // Process need_reference_images field: convert string "true"/"false" to boolean
     if (fields.need_reference_images) {
-      const needReferenceImages = fields.need_reference_images.toLowerCase() === 'true';
-      // Store boolean value in sourceMeta, or add directly to field if CMS API supports it
-      promptData.sourceMeta = {
-        ...promptData.sourceMeta,
-        needReferenceImages,
-      };
+      promptData.needReferenceImages = fields.need_reference_images.toLowerCase() === 'true';
     }
 
     let prompt: Prompt | null;

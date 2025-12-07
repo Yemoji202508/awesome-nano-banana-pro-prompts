@@ -122,6 +122,7 @@ export interface Prompt {
   language: string;
   featured?: boolean;
   sort?: number;
+  needReferenceImages?: boolean; // Whether this prompt requires user to input images
   sourceMeta?: Record<string, any>;
 }
 
