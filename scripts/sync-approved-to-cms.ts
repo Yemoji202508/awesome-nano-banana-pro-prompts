@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { Octokit } from '@octokit/rest';
 import { createPrompt, findPromptByGitHubIssue, updatePrompt, type Prompt } from './utils/cms-client.js';
 import { uploadImageToCMS } from './utils/image-uploader.js';
+import type { Media } from './utils/cms-client.js';
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
@@ -151,15 +152,22 @@ async function main() {
 
     // Parse multiple image URLs (one per line)
     const imageUrlsText = fields.image_urls || '';
-    const imageUrls = imageUrlsText
+    const originalImageUrls = imageUrlsText
       .split('\n')
       .map((url: string) => url.trim())
       .filter((url: string) => url.length > 0 && url.startsWith('http'));
 
-    console.log(`📸 Uploading ${imageUrls.length} image(s) to CMS...`);
-    const uploadedImages = await Promise.all(
-      imageUrls.map(url => uploadImageToCMS(url))
-    );
+    console.log(`📸 Uploading ${originalImageUrls.length} image(s) to CMS...`);
+    const uploadedMediaIds: number[] = [];
+    for (const url of originalImageUrls) {
+      try {
+        const media = await uploadImageToCMS(url);
+        uploadedMediaIds.push(media.id);
+      } catch (error) {
+        console.error(`Failed to upload image ${url}:`, error);
+        // Continue with other images even if one fails
+      }
+    }
 
     // Check if issue record already exists in CMS
     const existingPrompt = await findPromptByGitHubIssue(issueNumber);
@@ -173,11 +181,13 @@ async function main() {
     }
 
     // Build promptData, field values have been cleaned in parseIssue
+    // sourceMedia: original URLs from user input
+    // media: relation field storing media document IDs
     const promptData: Partial<Prompt> = {
       title: fields.prompt_title || '',
       content: fields.prompt || '',
       description: fields.description || '',
-      sourceMedia: uploadedImages,
+      sourceMedia: originalImageUrls, // Original URLs from user input
       author,
       language: parseLanguage(fields.language || fields.prompt_language || 'English'),
       sourcePublishedAt: issue.data.created_at,
@@ -185,6 +195,12 @@ async function main() {
         github_issue: issueNumber,
       },
     };
+
+    // Add uploaded media IDs to media field (relation field)
+    if (uploadedMediaIds.length > 0) {
+      // CMS expects relation field to be array of IDs
+      promptData.media = uploadedMediaIds as any;
+    }
 
     // Only include source_link if it has a value (already cleaned in parseIssue)
     if (fields.source_link) {
